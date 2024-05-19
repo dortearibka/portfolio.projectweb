@@ -307,7 +307,43 @@
         </div>
     </section>
       <!-- galleri -->
-   
+    
+      <?php
+      // Konfigurasi database
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbname = "contact_db";
+      
+      // Membuat koneksi
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      
+      // Cek koneksi
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+      
+      // Proses form saat dikirim
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+          // Ambil data dari form
+          $name = $conn->real_escape_string($_POST['name']);
+          $email = $conn->real_escape_string($_POST['email']);
+          $message = $conn->real_escape_string($_POST['message']);
+      
+          // Masukkan data ke tabel
+          $sql = "INSERT INTO messages (name, email, message) VALUES ('$name', '$email', '$message')";
+      
+          if ($conn->query($sql) === TRUE) {
+              echo "Message sent successfully";
+          } else {
+              echo "Error: " . $sql . "<br>" . $conn->error;
+          }
+      }
+      
+      // Tutup koneksi
+      $conn->close();
+      ?>
+    
     <!-- Contact -->
     <section id="contact">
       <div class="contact main-container">
