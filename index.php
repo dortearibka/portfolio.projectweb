@@ -1,3 +1,4 @@
+<?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +7,81 @@
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/responsive.css" />
     <title>Portfolio - Dortea Tadete</title>
+    <style>
+        /* Tempelkan CSS untuk pengujian */
+        .comment {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .comment form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment input[type="text"],
+        .comment textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .comment input[type="text"]:focus,
+        .comment textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .comment button {
+            width: 100px;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+
+        .comment button:hover {
+            background-color: #0056b3;
+        }
+
+        .comment-list {
+            margin-top: 2rem;
+        }
+
+        .comment-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comment-item h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .comment-item p {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .comment-item small {
+            color: #999;
+            font-size: 0.875rem;
+        }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -95,7 +171,7 @@
             </div>
             <h4>Skills</h4>
             <p>
-             Communication <br> Team Work <br>HTML, CSS & CANVA
+             Communication <br> Team Work <br>HTML, CSS and CANVA
             </p>
           </div>
 
@@ -247,7 +323,7 @@
             <div class="gallery">
               <div class="gallery-cover">
                 <img
-                  src="./images/galery/photo1.jpg"
+                  src="./images/photo1.jpg"
                   alt="gallery 1"
                 />
               </div> 
@@ -257,7 +333,7 @@
             <div class="gallery">
               <div class="gallery-cover">
                 <img
-                  src="./images/galery/photo2.jpg"
+                  src="./images/photo2.jpg"
                   alt="galery 2"
                 />
               </div>
@@ -267,7 +343,7 @@
             <div class="gallery">
               <div class="gallery-cover">
                 <img
-                  src="./images/galery/photo3.jpg"
+                  src="./images/photo3.jpg"
                   alt="gallery 3"
                 />
               </div>
@@ -277,7 +353,7 @@
             <div class="gallery">
                 <div class="gallery-cover">
                   <img
-                    src="./images/galery/photo4.jpg"
+                    src="./images/photo4.jpg"
                     alt="galery 4"
                   />
                 </div>
@@ -287,7 +363,7 @@
               <div class="gallery">
                 <div class="gallery-cover">
                   <img
-                    src="./images/galery/photo5.jpg"
+                    src="./images/photo5.jpg"
                     alt="galery 5"
                   />
                 </div>
@@ -297,7 +373,7 @@
               <div class="gallery">
                 <div class="gallery-cover">
                   <img
-                    src="./images/galery/photo6.jpg"
+                    src="./images/photo6.jpg"
                     alt="galery 6"
                   />
                 </div>
@@ -307,47 +383,10 @@
         </div>
     </section>
       <!-- galleri -->
-    
-      <?php
-      // Konfigurasi database
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "contact_db";
-      
-      // Membuat koneksi
-      $conn = new mysqli($servername, $username, $password, $dbname);
-      
-      // Cek koneksi
-      if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-      }
-      
-      // Proses form saat dikirim
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          // Ambil data dari form
-          $name = $conn->real_escape_string($_POST['name']);
-          $email = $conn->real_escape_string($_POST['email']);
-          $message = $conn->real_escape_string($_POST['message']);
-      
-          // Masukkan data ke tabel
-          $sql = "INSERT INTO messages (name, email, message) VALUES ('$name', '$email', '$message')";
-      
-          if ($conn->query($sql) === TRUE) {
-              echo "Message sent successfully";
-          } else {
-              echo "Error: " . $sql . "<br>" . $conn->error;
-          }
-      }
-      
-      // Tutup koneksi
-      $conn->close();
-      ?>
-    
-    <!-- Contact -->
-    <section id="contact">
+
+ <!-- Contact -->
+ <section id="contact">
       <div class="contact main-container">
-        
         <div class="contact-left">
           <form
             action="https://formspree.io/f/xeqwdykj"
@@ -391,7 +430,7 @@
             </div>
             <div class="contact-item-detail">
               <h4>Address</h4>
-              <p>Kab. Kep SITARO, Sulawesi Utara</p>
+              <p>Manado, Sulawesi Utara</p>
             </div>
           </div>
 
@@ -436,6 +475,16 @@
       </div>
     </section>
     <!-- End Contact -->
+ 
+<div class="comment">
+<!-- comment_form.php -->
+  <form method="POST" action="submit_comment.php">
+    <input type="hidden" name="article_id" value="1"> <!-- Ganti dengan ID artikel yang dinamis -->
+    <input type="text" name="name" placeholder="Your Name" required>
+    <textarea name="comment" placeholder="Your Comment" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div> 
 
     <!-- Footer -->
     <footer>
@@ -492,7 +541,7 @@
           </svg>
         </a>
       </div>
-      <p>&#169; 2024 - Dortea Ribka Tadete</p>
+      <p>&copy; 2024 - Dortea Ribka Tadete</p>
     </footer>
     <!-- End Footer -->
 
